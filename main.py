@@ -70,3 +70,5 @@ for column in numeric_columns:
 
     # plt.savefig(column + ".png")
     plt.show()
+
+    # мотя лох
