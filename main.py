@@ -60,6 +60,7 @@ for column in numeric_columns:
 print("Выбросы в числовых признаках:")
 print(outliers)
 
+
 # Создание диаграммы размаха для каждого числового признака
 for column in numeric_columns:
     plt.figure(figsize=(6, 4))
