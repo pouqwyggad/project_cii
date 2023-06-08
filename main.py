@@ -1,7 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn import preprocessing
-from sklearn.preprocessing import LabelEncoder
 
 from Classificator.classificator import Classificator
 
@@ -56,10 +55,10 @@ print("Выбросы в числовых признаках:")
 print(outliers)
 
 # Создание диаграммы размаха для каждого числового признака
-for column in numeric_columns:
-    plt.figure(figsize=(6, 4))
-    plt.boxplot(data[column])
-    plt.title(column)
+# for column in numeric_columns:
+    # plt.figure(figsize=(6, 4))
+    # plt.boxplot(data[column])
+    # plt.title(column)
     # plt.close()
 
     # plt.savefig(column + ".png")
@@ -76,6 +75,9 @@ data = data.drop(excludedAttributes, axis=1)
 # кодируем целевой признак "app_ip" при помощи LabelEncoder
 le = preprocessing.LabelEncoder()
 data['encoded'] = le.fit_transform(data['app_id'])
+
+data = pd.get_dummies(data, columns=["app_package_name"])
+data.fillna(value=0.0, inplace=True)
 
 classificator = Classificator(data)
 
