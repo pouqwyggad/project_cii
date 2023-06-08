@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 from sklearn import preprocessing
 from sklearn.preprocessing import LabelEncoder
 
+from Classificator.classificator import Classificator
+
 data = pd.read_csv('android_apps_traffic_attributes_prepared.csv')
 
 miss_values = data.isnull().sum()
@@ -61,7 +63,7 @@ for column in numeric_columns:
     # plt.close()
 
     # plt.savefig(column + ".png")
-    plt.show()
+    # plt.show()
 
 
 # фильтрация столца app_encryption
@@ -74,5 +76,9 @@ data = data.drop(excludedAttributes, axis=1)
 # кодируем целевой признак "app_ip" при помощи LabelEncoder
 le = preprocessing.LabelEncoder()
 data['encoded'] = le.fit_transform(data['app_id'])
+
+classificator = Classificator(data)
+
+classificator.fit()
 
 data.to_csv('updated_android_apps_traffic_attributes_prepared.csv', index=False)
