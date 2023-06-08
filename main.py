@@ -9,15 +9,17 @@ miss_values = data.isnull().sum()
 print("Проверка пропущенных значений по столбцам:")
 print(miss_values)
 
-data = data.dropna()  # удаление строк с пропущенными значениями
+# удаление строк с пропущенными значениями
+data = data.dropna()
 
 duplicates = data.duplicated()
 print("Проверка наличия дубликатов:")
 print(duplicates.sum())
 
-data = data.drop_duplicates()  # удаляем дубликаты, если они есть
-
+# удаляем дубликаты, если они есть
+data = data.drop_duplicates()
 data_types = data.dtypes
+
 print("Анализ типов данных:")
 print(data_types)
 
@@ -34,26 +36,24 @@ encoded = pd.get_dummies(data, columns=categorical_features.columns)
 numeric_columns = numeric_features.columns
 outliers = pd.DataFrame(columns=numeric_columns)
 
-# Проверка наличия выбросов в каждом числовом признаке
+# проверка наличия выбросов в каждом числовом признаке
 for column in numeric_columns:
     Q1 = data[column].quantile(0.25)
     Q3 = data[column].quantile(0.75)
     IQR = Q3 - Q1
 
-    # Определение границ выбросов
+    # определение границ выбросов
     lower_bound = Q1 - 1.5 * IQR
     upper_bound = Q3 + 1.5 * IQR
 
-    # Фильтрация выбросов
+    # фильтрация выбросов
     column_outliers = data[(data[column] < lower_bound) | (data[column] > upper_bound)][column]
-
     outliers = pd.concat([outliers, column_outliers], axis=1)
 
-# Вывод выбросов
 print("Выбросы в числовых признаках:")
 print(outliers)
 
-# Создание диаграммы размаха для каждого числового признака
+# создание диаграммы для каждого числового признака
 for column in numeric_columns:
     plt.figure(figsize=(6, 4))
     plt.boxplot(data[column])
@@ -75,4 +75,5 @@ data = data.drop(excludedAttributes, axis=1)
 le = preprocessing.LabelEncoder()
 data['encoded'] = le.fit_transform(data['app_id'])
 
+# создаем файл
 data.to_csv('updated_android_apps_traffic_attributes_prepared.csv', index=False)
