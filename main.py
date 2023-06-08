@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-data = pd.read_csv('android_apps_traffic_attributes_prepared.csv')
+data = pd.read_csv('/Users/smhn/Projects/project_cii/android_apps_traffic_attributes_prepared.csv')
 
 miss_values = data.isnull().sum()
 print("Проверка пропущенных значений по столбцам:")
