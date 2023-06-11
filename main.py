@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn import preprocessing
+from data_processing import preprocess_data
 
 from Classificator.classificator import Classificator
 
@@ -67,20 +68,14 @@ print(outliers)
 
 # фильтрация столца app_encryption
 data = data[data["app_encryption"] == "yes"]
+data_partially = data[data["app_encryption"] == "partially"]
 
-# удаляем ненужные атрибуты
-excludedAttributes = ['L3_Src_Addr', 'L3_Dst_Addr', 'flow_id', 'app_encryption']
-data = data.drop(excludedAttributes, axis=1)
 
-# кодируем целевой признак "app_ip" при помощи LabelEncoder
-le = preprocessing.LabelEncoder()
-data['encoded'] = le.fit_transform(data['app_id'])
-
-data = pd.get_dummies(data, columns=["app_package_name"])
-data.fillna(value=0.0, inplace=True)
-
-classificator = Classificator(data)
-
-classificator.fit()
+processed_data = preprocess_data(data)
+processed_data_partially = preprocess_data(data_partially)
 
 data.to_csv('updated_android_apps_traffic_attributes_prepared.csv', index=False)
+
+
+classificator = Classificator(processed_data, processed_data_partially)
+classificator.fit()

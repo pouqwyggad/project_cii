@@ -1,13 +1,17 @@
+import numpy as np
+import pandas as pd
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.naive_bayes import GaussianNB
+import time
 
 
 class Classificator:
-    def __init__(self, data):
+    def __init__(self, data, data_partially):
         self.data = data
+        self.data_partially = data_partially
 
     def fit(self):
         train_data_y = self.data['encoded']
@@ -18,26 +22,41 @@ class Classificator:
         state = 12
         test_size = 0.30
 
-        X_train, X_val, y_train, y_val = train_test_split(train_data, train_data_y,
-                                                          test_size=test_size, random_state=state)
+        x_train, x_val, y_train, y_val = train_test_split(train_data, train_data_y, test_size=test_size, random_state=state)
 
         # scaler = MinMaxScaler()
-        # X_train = scaler.fit_transform(X_train)
-        # X_val = scaler.transform(X_val)
+        # x_train = scaler.fit_transform(x_train)
+        # x_val = scaler.transform(x_val)
 
         gb_clf = GradientBoostingClassifier(n_estimators=20, learning_rate=0.5, max_features=2, max_depth=2, random_state=0)
-        gb_clf.fit(X_train, y_train)
+        # gb_clf.fit(x_train, y_train)
+
+        # время обучения
+        start_time = time.time()
+        gb_clf.fit(x_train, y_train)
+        end_time = time.time()
+        training_time = end_time - start_time
+
+        print("Training time: {0:.3f} sec.".format(training_time))
+
+        # время предсказания
+        start_time = time.time()
+        predictions = gb_clf.predict(x_val)
+        end_time = time.time()
+        prediction_time = end_time - start_time
+
+        print("Prediction time: {0:.3f} sec.".format(prediction_time))
 
         # gb_clf = RandomForestClassifier(n_estimators=100, max_features=2, max_depth=2, random_state=0)
-        # gb_clf.fit(X_train, y_train)
+        # gb_clf.fit(x_train, y_train)
 
         # gb_clf = GaussianNB()
-        # gb_clf.fit(X_train, y_train)
+        # gb_clf.fit(x_train, y_train)
 
-        print("Accuracy score (training): {0:.3f}".format(gb_clf.score(X_train, y_train)))
-        print("Accuracy score (validation): {0:.3f}".format(gb_clf.score(X_val, y_val)))
+        print("Accuracy score (training): {0:.3f}".format(gb_clf.score(x_train, y_train)))
+        print("Accuracy score (validation): {0:.3f}".format(gb_clf.score(x_val, y_val)))
 
-        predictions = gb_clf.predict(X_val)
+        # predictions = gb_clf.predict(x_val)
 
         print(confusion_matrix(y_val, predictions))
 
