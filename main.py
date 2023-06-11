@@ -54,7 +54,6 @@ for column in numeric_columns:
 
     outliers = pd.concat([outliers, column_outliers], axis=1)
 
-# Вывод выбросов
 print("Выбросы в числовых признаках:")
 print(outliers)
 
