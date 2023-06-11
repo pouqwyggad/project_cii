@@ -1,9 +1,12 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn import preprocessing
+
+from Classificator.classificator2 import Classificator2
 from data_processing import preprocess_data
 
 from Classificator.classificator import Classificator
+
 
 data = pd.read_csv('android_apps_traffic_attributes_prepared.csv')
 
@@ -65,17 +68,16 @@ print(outliers)
     # plt.savefig(column + ".png")
     # plt.show()
 
+data_new = data[data["app_encryption"] == "yes"]
+processed_data = preprocess_data(data_new)
+# processed_data.to_csv('updated_android_apps_traffic_attributes_prepared.csv', index=False)
 
-# фильтрация столца app_encryption
-data = data[data["app_encryption"] == "yes"]
-data_partially = data[data["app_encryption"] == "partially"]
+data_new = data[data["app_encryption"] == "partially"]
+processed_data_partially = preprocess_data(data_new)
+# processed_data_partially.to_csv('updated_partially_android_apps_traffic_attributes_prepared.csv', index=False)
 
+# classificator = Classificator(processed_data, processed_data_partially)
+# classificator.fit()
 
-processed_data = preprocess_data(data)
-processed_data_partially = preprocess_data(data_partially)
-
-data.to_csv('updated_android_apps_traffic_attributes_prepared.csv', index=False)
-
-
-classificator = Classificator(processed_data, processed_data_partially)
-classificator.fit()
+classificator2 = Classificator2(processed_data, processed_data_partially)
+classificator2.fit()
