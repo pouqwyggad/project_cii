@@ -24,16 +24,14 @@ class Classificator2:
 
         x_train, x_val, y_train, y_val = train_test_split(train_data, train_data_y, test_size=test_size, random_state=state)
 
-        start_time = time.time()
-
         sub_data = self.data_partially[:round(len(self.data_partially) / 3)]
         x_val = np.concatenate((x_val, sub_data.drop(columns="encoded").values), axis=0)
         y_val = np.concatenate((y_val, sub_data['encoded']), axis=0)
 
         gb_clf = GradientBoostingClassifier(n_estimators=20, learning_rate=0.5, max_features=2, max_depth=2, random_state=0)
 
+        start_time = time.time()
         gb_clf.fit(x_train, y_train)
-
         end_time = time.time()
         training_time = end_time - start_time
 

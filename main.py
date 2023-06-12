@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from sklearn import preprocessing
 
 from Classificator.classificator2 import Classificator2
+from Classificator.classificator_unknown import Classificator_unknown
 from data_processing import preprocess_data
 
 from Classificator.classificator import Classificator
@@ -75,8 +76,12 @@ data_new = data[data["app_encryption"] == "partially"]
 processed_data_partially = preprocess_data(data_new)
 # processed_data_partially.to_csv('updated_partially_android_apps_traffic_attributes_prepared.csv', index=False)
 
-# classificator = Classificator(processed_data, processed_data_partially)
+# classificator = Classificator(processed_data)
 # classificator.fit()
 
-classificator2 = Classificator2(processed_data, processed_data_partially)
-classificator2.fit()
+# classificator2 = Classificator2(processed_data, processed_data_partially)
+# classificator2.fit()
+
+classificator_unknown = Classificator_unknown(processed_data, processed_data_partially)
+classificator_unknown.fit()
+

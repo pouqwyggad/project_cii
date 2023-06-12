@@ -9,9 +9,8 @@ import time
 
 
 class Classificator:
-    def __init__(self, data, data_partially):
+    def __init__(self, data):
         self.data = data
-        self.data_partially = data_partially
 
     def fit(self):
         train_data_y = self.data['encoded']
