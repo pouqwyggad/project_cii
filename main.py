@@ -8,7 +8,7 @@ from data_processing import preprocess_data
 
 from Classificator.classificator import Classificator
 
-
+# Задание 1
 data = pd.read_csv('android_apps_traffic_attributes_prepared.csv')
 
 miss_values = data.isnull().sum()
@@ -68,20 +68,29 @@ print(outliers)
     # plt.savefig(column + ".png")
     # plt.show()
 
+# Задание 1
+
+# Тут начинается задание 2 и оно используется во всех
 data_new = data[data["app_encryption"] == "yes"]
 processed_data = preprocess_data(data_new)
 # processed_data.to_csv('updated_android_apps_traffic_attributes_prepared.csv', index=False)
 
+
+# используется начиная с 3 задания
 data_new = data[data["app_encryption"] == "partially"]
 processed_data_partially = preprocess_data(data_new)
 # processed_data_partially.to_csv('updated_partially_android_apps_traffic_attributes_prepared.csv', index=False)
 
-# classificator = Classificator(processed_data)
-# classificator.fit()
 
-# classificator2 = Classificator2(processed_data, processed_data_partially)
-# classificator2.fit()
+# для второго задания
+# classificator = Classificator(processed_data) # Задание 2
+# classificator.fit() # Задание 2
 
-classificator_unknown = Classificator_unknown(processed_data, processed_data_partially)
-classificator_unknown.fit()
+# для третьего задания
+# classificator2 = Classificator2(processed_data, processed_data_partially) # Задание 3
+# classificator2.fit() # Задание 3
+
+# для четвертого задания
+classificator_unknown = Classificator_unknown(processed_data, processed_data_partially) # Задание 4
+classificator_unknown.fit()# Задание 4
 
