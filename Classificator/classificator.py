@@ -14,7 +14,7 @@ import time
 
 class Classificator:
     def __init__(self, data):
-        self.data = data
+        self.data = data.copy()
 
     def fit(self, model_name='GradientBoosting', pipeline=False, **kwargs):
         """

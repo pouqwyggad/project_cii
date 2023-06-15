@@ -71,6 +71,7 @@ print(outliers)
 data_yes = data[data["app_encryption"] == "yes"]
 data_no = data[data["app_encryption"] == "no"]
 data_partially = data[data["app_encryption"] == "partially"]
+
 processed_data_yes = preprocess_data(data_yes)
 processed_data_no = preprocess_data(data_no)
 processed_data_partially = preprocess_data(data_partially)
