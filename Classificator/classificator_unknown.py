@@ -1,19 +1,36 @@
 import time
+
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix, classification_report
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
-from sklearn.preprocessing import MinMaxScaler, LabelEncoder
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import MinMaxScaler, LabelEncoder, StandardScaler
 from sklearn.naive_bayes import GaussianNB
+from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier
 
 
 class Classificator_unknown:
     def __init__(self, data, data_partially):
-        self.data = data
-        self.data_partially = data_partially
+        self.data = data.copy()
+        self.data_partially = data_partially.copy()
 
-    def fit(self):
+    def fit(self, model_name='GradientBoosting', pipeline=False, **kwargs):
+        """
+                    model_names:
+                    ----------
+                        GradientBoosting
+                        LogisticRegression
+                        RandomForest
+                        KNN
+                        DecisionTree
+                        SVM
+                """
+
         train_data_y = self.data['encoded']
         self.data.drop(labels="encoded", axis=1, inplace=True)
 
@@ -40,24 +57,46 @@ class Classificator_unknown:
         y_train_encoded = le.fit_transform(y_train)
         y_val_encoded = le.transform(y_val)
 
-        gb_clf = GradientBoostingClassifier(n_estimators=20, learning_rate=0.5, max_features=2, max_depth=2, random_state=0)
-        gb_clf.fit(x_train, y_train_encoded)
+        model = None
 
+        if model_name == 'GradientBoosting':
+            model = GradientBoostingClassifier(**kwargs)
+        elif model_name == 'LogisticRegression':
+            model = LogisticRegression(**kwargs)
+        elif model_name == 'RandomForest':
+            model = RandomForestClassifier(**kwargs)
+        elif model_name == 'KNN':
+            model = KNeighborsClassifier(**kwargs)
+        elif model_name == 'DecisionTree':
+            model = DecisionTreeClassifier(**kwargs)
+        elif model_name == 'SVM':
+            model = SVC(**kwargs)
+
+        if pipeline:
+            clf = make_pipeline(StandardScaler(), model)
+        else:
+            clf = model
+
+        # время обучения
+        start_time = time.time()
+        clf.fit(x_train, y_train_encoded)
         end_time = time.time()
         training_time = end_time - start_time
 
-        start_time = time.time()
-        predictions_encoded = gb_clf.predict(x_val)
-        end_time = time.time()
-        prediction_time = end_time - start_time
+        predictions_encoded = clf.predict(x_val)
 
-        # преобразование меток в исходный формат
         predictions = le.inverse_transform(predictions_encoded)
 
-        print("Training Time: {:.3f} seconds".format(training_time))
-        print("Prediction Time: {:.3f} seconds".format(prediction_time))
-        print("Accuracy: {:.3f}".format(gb_clf.score(x_val, y_val_encoded)))
+        print("Model {0}".format(model_name))
+        print("--------------------------------------------")
+
+        print("Training time: {0:.3f} sec.".format(training_time))
+
+        print("Accuracy score (training): {0:.3f}".format(clf.score(x_train, y_train)))
+        print("Accuracy score (validation): {0:.3f}".format(clf.score(x_val, y_val)))
         y_val_encoded = y_val_encoded.astype(str)
         print(confusion_matrix(y_val_encoded, predictions))
+
         print("Classification Report")
         print(classification_report(y_val_encoded, predictions, zero_division=1))
+        return clf

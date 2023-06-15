@@ -5,7 +5,8 @@ from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.naive_bayes import GaussianNB
 import time
 
@@ -15,8 +16,8 @@ from sklearn.tree import DecisionTreeClassifier
 
 class Classificator2:
     def __init__(self, data, data_partially):
-        self.data = data
-        self.data_partially = data_partially
+        self.data = data.copy()
+        self.data_partially = data_partially.copy()
 
     def fit(self, model_name='GradientBoosting', pipeline=False, **kwargs):
         """
