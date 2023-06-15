@@ -8,7 +8,7 @@ from data_processing import preprocess_data
 
 from Classificator.classificator import Classificator
 
-
+print("Задание 1:")
 data = pd.read_csv('android_apps_traffic_attributes_prepared.csv')
 
 miss_values = data.isnull().sum()
@@ -68,6 +68,8 @@ print(outliers)
     # plt.savefig(column + ".png")
     # plt.show()
 
+print("Задание 2:")
+
 data_yes = data[data["app_encryption"] == "yes"]
 data_no = data[data["app_encryption"] == "no"]
 data_partially = data[data["app_encryption"] == "partially"]
@@ -95,13 +97,12 @@ classificator_partially_4 = Classificator(processed_data_partially)
 classificator_partially_5 = Classificator(processed_data_partially)
 classificator_partially_6 = Classificator(processed_data_partially)
 
-
-clf_1 = classificator_yes_1.fit(model_name='GradientBoosting')
-clf_2 = classificator_yes_2.fit(model_name='LogisticRegression')
-clf_3 = classificator_yes_3.fit(model_name='RandomForest')
-clf_4 = classificator_yes_4.fit(model_name='KNN')
-clf_5 = classificator_yes_5.fit(model_name='DecisionTree')
-clf_6 = classificator_yes_6.fit(model_name='SVM')
+clf_yes_1 = classificator_yes_1.fit(model_name='GradientBoosting')
+clf_yes_2 = classificator_yes_2.fit(model_name='LogisticRegression')
+clf_yes_3 = classificator_yes_3.fit(model_name='RandomForest')
+clf_yes_4 = classificator_yes_4.fit(model_name='KNN')
+clf_yes_5 = classificator_yes_5.fit(model_name='DecisionTree')
+clf_yes_6 = classificator_yes_6.fit(model_name='SVM')
 
 clf_no_1 = classificator_no_1.fit(model_name='GradientBoosting')
 clf_no_2 = classificator_no_2.fit(model_name='LogisticRegression')
@@ -116,6 +117,22 @@ clf_partially_3 = classificator_partially_3.fit(model_name='RandomForest')
 clf_partially_4 = classificator_partially_4.fit(model_name='KNN')
 clf_partially_5 = classificator_partially_5.fit(model_name='DecisionTree')
 clf_partially_6 = classificator_partially_6.fit(model_name='SVM')
+
+print("Задание 3: ")
+clf_3_1 = Classificator2(processed_data_yes, processed_data_partially)
+clf_3_2 = Classificator2(processed_data_yes, processed_data_partially)
+clf_3_3 = Classificator2(processed_data_yes, processed_data_partially)
+clf_3_4 = Classificator2(processed_data_yes, processed_data_partially)
+clf_3_5 = Classificator2(processed_data_yes, processed_data_partially)
+clf_3_6 = Classificator2(processed_data_yes, processed_data_partially)
+
+clf_3_1.fit(model_name='GradientBoosting')
+clf_3_2.fit(model_name='LogisticRegression')
+clf_3_3.fit(model_name='RandomForest')
+clf_3_4.fit(model_name='KNN')
+clf_3_5.fit(model_name='DecisionTree')
+clf_3_6.fit(model_name='SVM')
+
 
 # classificator_unknown = Classificator_unknown(processed_data, processed_data_partially)
 # classificator_unknown.fit()

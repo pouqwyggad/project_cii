@@ -77,7 +77,7 @@ class Classificator:
         print(confusion_matrix(y_val, predictions))
 
         print("Classification Report")
-        print(classification_report(y_val, predictions))
+        print(classification_report(y_val, predictions, zero_division=1))
         return clf
 
     def prediction(self, x_val, y_val, clf):
