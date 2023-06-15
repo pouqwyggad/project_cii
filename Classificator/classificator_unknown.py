@@ -7,7 +7,7 @@ from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
 from sklearn.preprocessing import MinMaxScaler, LabelEncoder
 from sklearn.naive_bayes import GaussianNB
 
-# Задание 4
+
 class Classificator_unknown:
     def __init__(self, data, data_partially):
         self.data = data
@@ -32,6 +32,7 @@ class Classificator_unknown:
 
         unknown_app = sub_data.drop(columns="encoded")
         unknown_mark = np.full(len(unknown_app), "unknown")
+        # добавляем в обучающую выборку неизвестное приложение
         x_train = np.concatenate((x_train, unknown_app.values), axis=0)
         y_train = np.concatenate((y_train, unknown_mark), axis=0)
 
@@ -61,4 +62,3 @@ class Classificator_unknown:
         print(confusion_matrix(y_val_encoded, predictions))
         print("Classification Report")
         print(classification_report(y_val_encoded, predictions, zero_division=1))
-# Задание 4

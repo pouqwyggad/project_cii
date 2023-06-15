@@ -8,7 +8,6 @@ from data_processing import preprocess_data
 
 from Classificator.classificator import Classificator
 
-# Задание 1
 data = pd.read_csv('android_apps_traffic_attributes_prepared.csv')
 
 miss_values = data.isnull().sum()
@@ -58,7 +57,6 @@ for column in numeric_columns:
 print("Выбросы в числовых признаках:")
 print(outliers)
 
-# Создание диаграммы размаха для каждого числового признака
 # for column in numeric_columns:
     # plt.figure(figsize=(6, 4))
     # plt.boxplot(data[column])
@@ -68,29 +66,26 @@ print(outliers)
     # plt.savefig(column + ".png")
     # plt.show()
 
-# Задание 1
-
-# Тут начинается задание 2 и оно используется во всех
 data_new = data[data["app_encryption"] == "yes"]
 processed_data = preprocess_data(data_new)
 # processed_data.to_csv('updated_android_apps_traffic_attributes_prepared.csv', index=False)
 
 
-# используется начиная с 3 задания
 data_new = data[data["app_encryption"] == "partially"]
 processed_data_partially = preprocess_data(data_new)
 # processed_data_partially.to_csv('updated_partially_android_apps_traffic_attributes_prepared.csv', index=False)
 
 
-# для второго задания
-# classificator = Classificator(processed_data) # Задание 2
-# classificator.fit() # Задание 2
+# classificator = Classificator(processed_data)
+# classificator.fit()
 
-# для третьего задания
-# classificator2 = Classificator2(processed_data, processed_data_partially) # Задание 3
-# classificator2.fit() # Задание 3
+# classificator2 = Classificator2(processed_data, processed_data_partially)
+# classificator2.fit()
 
-# для четвертого задания
-classificator_unknown = Classificator_unknown(processed_data, processed_data_partially) # Задание 4
-classificator_unknown.fit()# Задание 4
+unknown_app = data_partially_subset.drop(columns="encoded")
+unknown_labels = np.full(len(unknown_app), "unknown")
+
+
+classificator_unknown = Classificator_unknown(processed_data, processed_data_partially)
+classificator_unknown.fit()
 

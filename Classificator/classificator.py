@@ -7,7 +7,7 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.naive_bayes import GaussianNB
 import time
 
-# Задание 2
+
 class Classificator:
     def __init__(self, data):
         self.data = data
@@ -58,4 +58,3 @@ class Classificator:
 
         print("Classification Report")
         print(classification_report(y_val, predictions))
-# Задание 2

@@ -7,7 +7,7 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.naive_bayes import GaussianNB
 import time
 
-# Задание 3
+
 class Classificator2:
     def __init__(self, data, data_partially):
         self.data = data
@@ -47,4 +47,3 @@ class Classificator2:
         print(confusion_matrix(y_val, predictions))
         print("Classification Report")
         print(classification_report(y_val, predictions))
-# Задание 3
