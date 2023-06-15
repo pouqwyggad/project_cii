@@ -72,33 +72,35 @@ print(outliers)
 
 print("Задание 2:")
 
+# берем из всей выборки только зашифрованные
 data_yes = data[data["app_encryption"] == "yes"]
+# берем из всей выборки только не зашифрованные
 data_no = data[data["app_encryption"] == "no"]
+# берем из всей выборки с плавающим шифрованием
 data_partially = data[data["app_encryption"] == "partially"]
 
+# удаляем все лишнее
 processed_data_yes = preprocess_data(data_yes)
 processed_data_no = preprocess_data(data_no)
 processed_data_partially = preprocess_data(data_partially)
 
+# создаем экземпляры классификатора обученного на зашифрованных приложениях
 # classificator_yes_1 = Classificator(processed_data_yes)
 # classificator_yes_2 = Classificator(processed_data_yes)
 # classificator_yes_3 = Classificator(processed_data_yes)
 # classificator_yes_4 = Classificator(processed_data_yes)
 # classificator_yes_5 = Classificator(processed_data_yes)
 # classificator_yes_6 = Classificator(processed_data_yes)
+
+# создаем экземпляры классификатора обученного на не зашифрованных приложениях
 # classificator_no_1 = Classificator(processed_data_no)
 # classificator_no_2 = Classificator(processed_data_no)
 # classificator_no_3 = Classificator(processed_data_no)
 # classificator_no_4 = Classificator(processed_data_no)
 # classificator_no_5 = Classificator(processed_data_no)
 # classificator_no_6 = Classificator(processed_data_no)
-classificator_partially_1 = Classificator_unknown(processed_data_yes, processed_data_partially)
-classificator_partially_2 = Classificator_unknown(processed_data_yes, processed_data_partially)
-classificator_partially_3 = Classificator_unknown(processed_data_yes, processed_data_partially)
-classificator_partially_4 = Classificator_unknown(processed_data_yes, processed_data_partially)
-classificator_partially_5 = Classificator_unknown(processed_data_yes, processed_data_partially)
-classificator_partially_6 = Classificator_unknown(processed_data_yes, processed_data_partially)
 
+# обучаем
 # print('Encripted YES')
 # clf_yes_1 = classificator_yes_1.fit(model_name='GradientBoosting')
 # clf_yes_2 = classificator_yes_2.fit(model_name='LogisticRegression')
@@ -106,7 +108,8 @@ classificator_partially_6 = Classificator_unknown(processed_data_yes, processed_
 # clf_yes_4 = classificator_yes_4.fit(model_name='KNN')
 # clf_yes_5 = classificator_yes_5.fit(model_name='DecisionTree')
 # clf_yes_6 = classificator_yes_6.fit(model_name='SVM')
-#
+
+# обучаем
 # print('Encripted NO')
 # clf_no_1 = classificator_no_1.fit(model_name='GradientBoosting')
 # clf_no_2 = classificator_no_2.fit(model_name='LogisticRegression')
@@ -114,7 +117,9 @@ classificator_partially_6 = Classificator_unknown(processed_data_yes, processed_
 # clf_no_4 = classificator_no_4.fit(model_name='KNN')
 # clf_no_5 = classificator_no_5.fit(model_name='DecisionTree')
 # clf_no_6 = classificator_no_6.fit(model_name='SVM')
-#
+
+# создаем экземпляры классификатора обученного на зашифрованных приложениях
+# с добавлением в тестовую выборку неизвесных приложений
 # print("Задание 3: ")
 # clf_3_1 = Classificator2(processed_data_yes, processed_data_partially)
 # clf_3_2 = Classificator2(processed_data_yes, processed_data_partially)
@@ -122,7 +127,8 @@ classificator_partially_6 = Classificator_unknown(processed_data_yes, processed_
 # clf_3_4 = Classificator2(processed_data_yes, processed_data_partially)
 # clf_3_5 = Classificator2(processed_data_yes, processed_data_partially)
 # clf_3_6 = Classificator2(processed_data_yes, processed_data_partially)
-#
+
+# обучаем
 # clf_3_1.fit(model_name='GradientBoosting')
 # clf_3_2.fit(model_name='LogisticRegression')
 # clf_3_3.fit(model_name='RandomForest')
@@ -132,6 +138,15 @@ classificator_partially_6 = Classificator_unknown(processed_data_yes, processed_
 
 print("Задание 4:")
 
+# создаем экземпляры классификатора обученного на зашифрованных приложениях
+# с добавлением в тестовую выборку неизвесных приложений
+classificator_partially_1 = Classificator_unknown(processed_data_yes, processed_data_partially)
+classificator_partially_2 = Classificator_unknown(processed_data_yes, processed_data_partially)
+classificator_partially_3 = Classificator_unknown(processed_data_yes, processed_data_partially)
+classificator_partially_4 = Classificator_unknown(processed_data_yes, processed_data_partially)
+classificator_partially_5 = Classificator_unknown(processed_data_yes, processed_data_partially)
+classificator_partially_6 = Classificator_unknown(processed_data_yes, processed_data_partially)
+
 # clf_partially_1 = classificator_partially_1.fit(model_name='GradientBoosting')
 # clf_partially_2 = classificator_partially_2.fit(model_name='LogisticRegression')
 # clf_partially_3 = classificator_partially_3.fit(model_name='RandomForest')
@@ -139,6 +154,7 @@ print("Задание 4:")
 # clf_partially_5 = classificator_partially_5.fit(model_name='DecisionTree')
 # clf_partially_6 = classificator_partially_6.fit(model_name='SVM')
 
+# выделяем из выборки отдельные приложения с шифрованием
 app_1 = data[data["app_id"] == 3]
 app_2 = data[data["app_id"] == 9]
 app_3 = data[data["app_id"] == 10]
@@ -146,6 +162,7 @@ app_4 = data[data["app_id"] == 12]
 app_5 = data[data["app_id"] == 14]
 app_6 = data[data["app_id"] == 17]
 
+# выделяем из выборки отдельные приложения без шифрования
 app_7 = data[data["app_id"] == 13]
 app_8 = data[data["app_id"] == 23]
 app_9 = data[data["app_id"] == 48]
@@ -153,6 +170,7 @@ app_10 = data[data["app_id"] == 61]
 app_11 = data[data["app_id"] == 58]
 app_12 = data[data["app_id"] == 82]
 
+# создаем экземпляр класса
 clf_6_1 = Classificator6(preprocess_data(app_1))
 clf_6_2 = Classificator6(preprocess_data(app_2))
 clf_6_3 = Classificator6(preprocess_data(app_3))
@@ -166,6 +184,7 @@ clf_6_10 = Classificator6(preprocess_data(app_10))
 clf_6_11 = Classificator6(preprocess_data(app_11))
 clf_6_12 = Classificator6(preprocess_data(app_12))
 
+# обучаем
 clf_6_1.fit()
 clf_6_2.fit()
 clf_6_3.fit()
@@ -179,21 +198,31 @@ clf_6_10.fit()
 clf_6_11.fit()
 clf_6_12.fit()
 
+# добавляем обученные классификаторы в массив
 classificators = [clf_6_1, clf_6_2, clf_6_3, clf_6_4, clf_6_5, clf_6_6, clf_6_7, clf_6_8, clf_6_9, clf_6_10, clf_6_11, clf_6_12]
 
+print(processed_data_yes)
+# объединяем все данные в один массив
 data_all = pd.concat((processed_data_yes, processed_data_no), axis=0)
 data_all = pd.concat((data_all, processed_data_partially), axis=0)
 
+# достаем от туда колонку encoded
 y_val = data_all['encoded']
+# преобразуем ее к массиву
 y_val.to_numpy()
+# удаляем из общей выборки колонку encoded
 data_all.drop(labels="encoded", axis=1, inplace=True)
-i = 0
 
+i = 0
+# запускаем цикл по всей выборке, на каждой итерации достается строка с данными по колонкам в виде массива
 for line in data_all.to_numpy():
     max = -1
-    for i, classificator in enumerate(classificators):
-        print(i)
+    # запускаем цикл по всем классификаторам
+    for j, classificator in enumerate(classificators):
+        print(j)
+        # преобразуем строку с данными к фрейму
         x_val = pd.DataFrame([line], columns=['app_id', 'L3_Tot_Pl_Sz_C2S', 'L3_Tot_Pl_Sz_S2C', 'L4_Tot_Pl_Sz_C2S', 'L4_Tot_Pl_Sz_S2C', 'L3_Avg_Dtg_Sz_C2S', 'L3_Avg_Dtg_Sz_S2C', 'L4_Avg_Pl_Sz_C2S', 'L4_Avg_Pl_Sz_C2S.1', 'L3_Std_Tot_Sz_C2S', 'L3_Std_Tot_Sz_S2C', 'L4_Std_Pl_Sz_C2S', 'L4_Std_Pl_Sz_S2C', 'L3_Avg_Pac4Msg_C2S', 'L3_Avg_Pac4Msg_S2C', 'L3_Efficiency_C2S', 'L3_Efficiency_S2C', 'L3_Tot_Dtg_Sz_CS_ratio', 'L4_Tot_Pl_Sz_CS_ratio', 'L3_Tot_Dtg_Cnt_CS_ratio', 'L3_Tot_Dtg_Cnt_C2S', 'L3_Tot_Dtg_Cnt_S2C'])
         y_val_new = pd.DataFrame([y_val[i]], columns=['encoded'])
+        # классифицируем
         prediction = classificator.prediction(x_val=x_val.values, y_val=y_val_new)
     i += 1

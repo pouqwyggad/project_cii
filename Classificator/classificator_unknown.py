@@ -43,9 +43,12 @@ class Classificator_unknown:
 
         start_time = time.time()
 
+        # берем треть от неизвестных приложений
         sub_data = self.data_partially[:round(len(self.data_partially) / 3)]
-        x_val = np.concatenate((x_val, sub_data.drop(columns="encoded").values), axis=0)
-        y_val = np.concatenate((y_val, sub_data['encoded']), axis=0)
+
+        # заменяем часть тестовой выборки неизвестными приложениями
+        x_val = np.concatenate((x_val[:round(len(self.data_partially) / 3)], sub_data.drop(columns="encoded").values), axis=0)
+        y_val = np.concatenate((y_val[:round(len(self.data_partially) / 3)], sub_data['encoded']), axis=0)
 
         unknown_app = sub_data.drop(columns="encoded")
         unknown_mark = np.full(len(unknown_app), "unknown")
