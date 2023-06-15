@@ -68,20 +68,29 @@ print(outliers)
     # plt.savefig(column + ".png")
     # plt.show()
 
-data_new = data[data["app_encryption"] == "yes"]
-processed_data = preprocess_data(data_new)
-# processed_data.to_csv('updated_android_apps_traffic_attributes_prepared.csv', index=False)
+data_yes = data[data["app_encryption"] == "yes"]
+data_no = data[data["app_encryption"] == "no"]
+data_partially = data[data["app_encryption"] == "partially"]
+processed_data_yes = preprocess_data(data_yes)
+processed_data_no = preprocess_data(data_no)
+processed_data_partially = preprocess_data(data_partially)
 
-data_new = data[data["app_encryption"] == "partially"]
-processed_data_partially = preprocess_data(data_new)
-# processed_data_partially.to_csv('updated_partially_android_apps_traffic_attributes_prepared.csv', index=False)
+classificator_yes_1 = Classificator(processed_data_yes)
+classificator_yes_2 = Classificator(processed_data_yes)
+classificator_yes_3 = Classificator(processed_data_yes)
+classificator_yes_4 = Classificator(processed_data_yes)
+classificator_yes_5 = Classificator(processed_data_yes)
+classificator_yes_6 = Classificator(processed_data_yes)
+classificator_no = Classificator(processed_data_no)
+classificator_partially = Classificator(processed_data_partially)
 
-# classificator = Classificator(processed_data)
-# classificator.fit()
+clf_1 = classificator_yes_1.fit(model_name='GradientBoosting')
+clf_2 = classificator_yes_2.fit(model_name='LogisticRegression')
+clf_3 = classificator_yes_3.fit(model_name='RandomForest')
+clf_4 = classificator_yes_4.fit(model_name='KNN')
+clf_5 = classificator_yes_5.fit(model_name='DecisionTree')
+clf_6 = classificator_yes_6.fit(model_name='SVM')
 
-# classificator2 = Classificator2(processed_data, processed_data_partially)
-# classificator2.fit()
-
-classificator_unknown = Classificator_unknown(processed_data, processed_data_partially)
-classificator_unknown.fit()
+# classificator_unknown = Classificator_unknown(processed_data, processed_data_partially)
+# classificator_unknown.fit()
 
