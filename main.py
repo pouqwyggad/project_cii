@@ -1,7 +1,5 @@
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn import preprocessing
 
 from Classificator.classificator2 import Classificator2
 from Classificator.Classificator6 import Classificator6
@@ -61,14 +59,14 @@ print("Выбросы в числовых признаках:")
 print(outliers)
 
 # Создание диаграммы размаха для каждого числового признака
-# for column in numeric_columns:
-    # plt.figure(figsize=(6, 4))
-    # plt.boxplot(data[column])
-    # plt.title(column)
-    # plt.close()
+for column in numeric_columns:
+    plt.figure(figsize=(6, 4))
+    plt.boxplot(data[column])
+    plt.title(column)
+    plt.close()
 
-    # plt.savefig(column + ".png")
-    # plt.show()
+    plt.savefig(column + ".png")
+    plt.show()
 
 print("Задание 2:")
 
@@ -85,56 +83,56 @@ processed_data_no = preprocess_data(data_no)
 processed_data_partially = preprocess_data(data_partially)
 
 # создаем экземпляры классификатора обученного на зашифрованных приложениях
-# classificator_yes_1 = Classificator(processed_data_yes)
-# classificator_yes_2 = Classificator(processed_data_yes)
-# classificator_yes_3 = Classificator(processed_data_yes)
-# classificator_yes_4 = Classificator(processed_data_yes)
-# classificator_yes_5 = Classificator(processed_data_yes)
-# classificator_yes_6 = Classificator(processed_data_yes)
+classificator_yes_1 = Classificator(processed_data_yes)
+classificator_yes_2 = Classificator(processed_data_yes)
+classificator_yes_3 = Classificator(processed_data_yes)
+classificator_yes_4 = Classificator(processed_data_yes)
+classificator_yes_5 = Classificator(processed_data_yes)
+classificator_yes_6 = Classificator(processed_data_yes)
 
 # создаем экземпляры классификатора обученного на не зашифрованных приложениях
-# classificator_no_1 = Classificator(processed_data_no)
-# classificator_no_2 = Classificator(processed_data_no)
-# classificator_no_3 = Classificator(processed_data_no)
-# classificator_no_4 = Classificator(processed_data_no)
-# classificator_no_5 = Classificator(processed_data_no)
-# classificator_no_6 = Classificator(processed_data_no)
+classificator_no_1 = Classificator(processed_data_no)
+classificator_no_2 = Classificator(processed_data_no)
+classificator_no_3 = Classificator(processed_data_no)
+classificator_no_4 = Classificator(processed_data_no)
+classificator_no_5 = Classificator(processed_data_no)
+classificator_no_6 = Classificator(processed_data_no)
 
 # обучаем
-# print('Encripted YES')
-# clf_yes_1 = classificator_yes_1.fit(model_name='GradientBoosting')
-# clf_yes_2 = classificator_yes_2.fit(model_name='LogisticRegression')
-# clf_yes_3 = classificator_yes_3.fit(model_name='RandomForest')
-# clf_yes_4 = classificator_yes_4.fit(model_name='KNN')
-# clf_yes_5 = classificator_yes_5.fit(model_name='DecisionTree')
-# clf_yes_6 = classificator_yes_6.fit(model_name='SVM')
+print('Encripted YES')
+clf_yes_1 = classificator_yes_1.fit(model_name='GradientBoosting')
+clf_yes_2 = classificator_yes_2.fit(model_name='LogisticRegression')
+clf_yes_3 = classificator_yes_3.fit(model_name='RandomForest')
+clf_yes_4 = classificator_yes_4.fit(model_name='KNN')
+clf_yes_5 = classificator_yes_5.fit(model_name='DecisionTree')
+clf_yes_6 = classificator_yes_6.fit(model_name='SVM')
 
 # обучаем
-# print('Encripted NO')
-# clf_no_1 = classificator_no_1.fit(model_name='GradientBoosting')
-# clf_no_2 = classificator_no_2.fit(model_name='LogisticRegression')
-# clf_no_3 = classificator_no_3.fit(model_name='RandomForest')
-# clf_no_4 = classificator_no_4.fit(model_name='KNN')
-# clf_no_5 = classificator_no_5.fit(model_name='DecisionTree')
-# clf_no_6 = classificator_no_6.fit(model_name='SVM')
+print('Encripted NO')
+clf_no_1 = classificator_no_1.fit(model_name='GradientBoosting')
+clf_no_2 = classificator_no_2.fit(model_name='LogisticRegression')
+clf_no_3 = classificator_no_3.fit(model_name='RandomForest')
+clf_no_4 = classificator_no_4.fit(model_name='KNN')
+clf_no_5 = classificator_no_5.fit(model_name='DecisionTree')
+clf_no_6 = classificator_no_6.fit(model_name='SVM')
 
 # создаем экземпляры классификатора обученного на зашифрованных приложениях
 # с добавлением в тестовую выборку неизвесных приложений
 # print("Задание 3: ")
-# clf_3_1 = Classificator2(processed_data_yes, processed_data_partially)
-# clf_3_2 = Classificator2(processed_data_yes, processed_data_partially)
-# clf_3_3 = Classificator2(processed_data_yes, processed_data_partially)
-# clf_3_4 = Classificator2(processed_data_yes, processed_data_partially)
-# clf_3_5 = Classificator2(processed_data_yes, processed_data_partially)
-# clf_3_6 = Classificator2(processed_data_yes, processed_data_partially)
+clf_3_1 = Classificator2(processed_data_yes, processed_data_partially)
+clf_3_2 = Classificator2(processed_data_yes, processed_data_partially)
+clf_3_3 = Classificator2(processed_data_yes, processed_data_partially)
+clf_3_4 = Classificator2(processed_data_yes, processed_data_partially)
+clf_3_5 = Classificator2(processed_data_yes, processed_data_partially)
+clf_3_6 = Classificator2(processed_data_yes, processed_data_partially)
 
 # обучаем
-# clf_3_1.fit(model_name='GradientBoosting')
-# clf_3_2.fit(model_name='LogisticRegression')
-# clf_3_3.fit(model_name='RandomForest')
-# clf_3_4.fit(model_name='KNN')
-# clf_3_5.fit(model_name='DecisionTree')
-# clf_3_6.fit(model_name='SVM')
+clf_3_1.fit(model_name='GradientBoosting')
+clf_3_2.fit(model_name='LogisticRegression')
+clf_3_3.fit(model_name='RandomForest')
+clf_3_4.fit(model_name='KNN')
+clf_3_5.fit(model_name='DecisionTree')
+clf_3_6.fit(model_name='SVM')
 
 print("Задание 4:")
 
@@ -147,12 +145,12 @@ classificator_partially_4 = Classificator_unknown(processed_data_yes, processed_
 classificator_partially_5 = Classificator_unknown(processed_data_yes, processed_data_partially)
 classificator_partially_6 = Classificator_unknown(processed_data_yes, processed_data_partially)
 
-# clf_partially_1 = classificator_partially_1.fit(model_name='GradientBoosting')
-# clf_partially_2 = classificator_partially_2.fit(model_name='LogisticRegression')
-# clf_partially_3 = classificator_partially_3.fit(model_name='RandomForest')
-# clf_partially_4 = classificator_partially_4.fit(model_name='KNN')
-# clf_partially_5 = classificator_partially_5.fit(model_name='DecisionTree')
-# clf_partially_6 = classificator_partially_6.fit(model_name='SVM')
+clf_partially_1 = classificator_partially_1.fit(model_name='GradientBoosting')
+clf_partially_2 = classificator_partially_2.fit(model_name='LogisticRegression')
+clf_partially_3 = classificator_partially_3.fit(model_name='RandomForest')
+clf_partially_4 = classificator_partially_4.fit(model_name='KNN')
+clf_partially_5 = classificator_partially_5.fit(model_name='DecisionTree')
+clf_partially_6 = classificator_partially_6.fit(model_name='SVM')
 
 data_all = data.copy()
 data_all = preprocess_data(data_all)
@@ -215,6 +213,7 @@ y_val = y_val.values
 
 # удаляем из общей выборки колонку encoded
 data_all.drop(labels="encoded", axis=1, inplace=True)
+data_all.to_csv('test')
 data_all = data_all.values
 
 i = 0
