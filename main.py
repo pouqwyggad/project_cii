@@ -154,35 +154,41 @@ classificator_partially_6 = Classificator_unknown(processed_data_yes, processed_
 # clf_partially_5 = classificator_partially_5.fit(model_name='DecisionTree')
 # clf_partially_6 = classificator_partially_6.fit(model_name='SVM')
 
+data_all = data.copy()
+data_all = preprocess_data(data_all)
+
 # выделяем из выборки отдельные приложения с шифрованием
-app_1 = data[data["app_id"] == 3]
-app_2 = data[data["app_id"] == 9]
-app_3 = data[data["app_id"] == 10]
-app_4 = data[data["app_id"] == 12]
-app_5 = data[data["app_id"] == 14]
-app_6 = data[data["app_id"] == 17]
+app_1 = data_all[data_all["app_id"] == 3]
+app_2 = data_all[data_all["app_id"] == 9]
+app_3 = data_all[data_all["app_id"] == 10]
+app_4 = data_all[data_all["app_id"] == 12]
+app_5 = data_all[data_all["app_id"] == 14]
+app_6 = data_all[data_all["app_id"] == 17]
 
 # выделяем из выборки отдельные приложения без шифрования
-app_7 = data[data["app_id"] == 13]
-app_8 = data[data["app_id"] == 23]
-app_9 = data[data["app_id"] == 48]
-app_10 = data[data["app_id"] == 61]
-app_11 = data[data["app_id"] == 58]
-app_12 = data[data["app_id"] == 82]
+app_7 = data_all[data_all["app_id"] == 13]
+app_8 = data_all[data_all["app_id"] == 23]
+app_9 = data_all[data_all["app_id"] == 48]
+app_10 = data_all[data_all["app_id"] == 61]
+app_11 = data_all[data_all["app_id"] == 58]
+app_12 = data_all[data_all["app_id"] == 82]
+
+app_5.to_csv('test')
+app_10.to_csv('test2')
 
 # создаем экземпляр класса
-clf_6_1 = Classificator6(preprocess_data(app_1))
-clf_6_2 = Classificator6(preprocess_data(app_2))
-clf_6_3 = Classificator6(preprocess_data(app_3))
-clf_6_4 = Classificator6(preprocess_data(app_4))
-clf_6_5 = Classificator6(preprocess_data(app_5))
-clf_6_6 = Classificator6(preprocess_data(app_6))
-clf_6_7 = Classificator6(preprocess_data(app_7))
-clf_6_8 = Classificator6(preprocess_data(app_8))
-clf_6_9 = Classificator6(preprocess_data(app_9))
-clf_6_10 = Classificator6(preprocess_data(app_10))
-clf_6_11 = Classificator6(preprocess_data(app_11))
-clf_6_12 = Classificator6(preprocess_data(app_12))
+clf_6_1 = Classificator6(app_1)
+clf_6_2 = Classificator6(app_2)
+clf_6_3 = Classificator6(app_3)
+clf_6_4 = Classificator6(app_4)
+clf_6_5 = Classificator6(app_5)
+clf_6_6 = Classificator6(app_6)
+clf_6_7 = Classificator6(app_7)
+clf_6_8 = Classificator6(app_8)
+clf_6_9 = Classificator6(app_9)
+clf_6_10 = Classificator6(app_10)
+clf_6_11 = Classificator6(app_11)
+clf_6_12 = Classificator6(app_12)
 
 # обучаем
 clf_6_1.fit()
@@ -201,28 +207,34 @@ clf_6_12.fit()
 # добавляем обученные классификаторы в массив
 classificators = [clf_6_1, clf_6_2, clf_6_3, clf_6_4, clf_6_5, clf_6_6, clf_6_7, clf_6_8, clf_6_9, clf_6_10, clf_6_11, clf_6_12]
 
-print(processed_data_yes)
 # объединяем все данные в один массив
-data_all = pd.concat((processed_data_yes, processed_data_no), axis=0)
-data_all = pd.concat((data_all, processed_data_partially), axis=0)
 
 # достаем от туда колонку encoded
 y_val = data_all['encoded']
-# преобразуем ее к массиву
-y_val.to_numpy()
+y_val = y_val.values
+
 # удаляем из общей выборки колонку encoded
 data_all.drop(labels="encoded", axis=1, inplace=True)
+data_all = data_all.values
 
 i = 0
 # запускаем цикл по всей выборке, на каждой итерации достается строка с данными по колонкам в виде массива
-for line in data_all.to_numpy():
+for line in data_all:
     max = -1
+    app_id = 0
     # запускаем цикл по всем классификаторам
     for j, classificator in enumerate(classificators):
-        print(j)
-        # преобразуем строку с данными к фрейму
-        x_val = pd.DataFrame([line], columns=['app_id', 'L3_Tot_Pl_Sz_C2S', 'L3_Tot_Pl_Sz_S2C', 'L4_Tot_Pl_Sz_C2S', 'L4_Tot_Pl_Sz_S2C', 'L3_Avg_Dtg_Sz_C2S', 'L3_Avg_Dtg_Sz_S2C', 'L4_Avg_Pl_Sz_C2S', 'L4_Avg_Pl_Sz_C2S.1', 'L3_Std_Tot_Sz_C2S', 'L3_Std_Tot_Sz_S2C', 'L4_Std_Pl_Sz_C2S', 'L4_Std_Pl_Sz_S2C', 'L3_Avg_Pac4Msg_C2S', 'L3_Avg_Pac4Msg_S2C', 'L3_Efficiency_C2S', 'L3_Efficiency_S2C', 'L3_Tot_Dtg_Sz_CS_ratio', 'L4_Tot_Pl_Sz_CS_ratio', 'L3_Tot_Dtg_Cnt_CS_ratio', 'L3_Tot_Dtg_Cnt_C2S', 'L3_Tot_Dtg_Cnt_S2C'])
-        y_val_new = pd.DataFrame([y_val[i]], columns=['encoded'])
         # классифицируем
-        prediction = classificator.prediction(x_val=x_val.values, y_val=y_val_new)
+        prediction = classificator.prediction(x_val=line, y_val=y_val[i])
+
+        # если есть совпадение, и оно больше максимального, перезаписываем max и созраняем id приложения
+        if prediction > max:
+            max = prediction
+            app_id = line[0]
+
+    if max > 0.5:
+        print("App: {0}".format(round(app_id)))
+    else:
+        print("App: unknown")
+
     i += 1

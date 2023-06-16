@@ -74,9 +74,15 @@ class Classificator6:
         return clf
 
     def prediction(self, x_val, y_val):
+        # создаем фреймы из массивов
+        x_val = pd.DataFrame([x_val], columns=['app_id', 'L3_Tot_Pl_Sz_C2S', 'L3_Tot_Pl_Sz_S2C', 'L4_Tot_Pl_Sz_C2S',
+                                              'L4_Tot_Pl_Sz_S2C', 'L3_Avg_Dtg_Sz_C2S', 'L3_Avg_Dtg_Sz_S2C',
+                                              'L4_Avg_Pl_Sz_C2S', 'L4_Avg_Pl_Sz_C2S.1', 'L3_Std_Tot_Sz_C2S',
+                                              'L3_Std_Tot_Sz_S2C', 'L4_Std_Pl_Sz_C2S', 'L4_Std_Pl_Sz_S2C',
+                                              'L3_Avg_Pac4Msg_C2S', 'L3_Avg_Pac4Msg_S2C', 'L3_Efficiency_C2S',
+                                              'L3_Efficiency_S2C', 'L3_Tot_Dtg_Sz_CS_ratio', 'L4_Tot_Pl_Sz_CS_ratio',
+                                              'L3_Tot_Dtg_Cnt_CS_ratio', 'L3_Tot_Dtg_Cnt_C2S', 'L3_Tot_Dtg_Cnt_S2C'])
+        y_val_new = pd.DataFrame([y_val], columns=['encoded'])
+
         # классифицируем данные
-        print("Accuracy score (validation): {0:.3f}".format(self.clf.score(x_val, y_val)))
-
-        print("--------------------------------------------")
-
-        return self.clf.score(x_val, y_val)
+        return self.clf.score(x_val.values, y_val_new)
