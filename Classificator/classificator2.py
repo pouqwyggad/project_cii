@@ -14,10 +14,14 @@ from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 
 
+# взяли половину тестовой выборки из предыдущего задания
+# добавили к этой выборке приложения частично шифрующие трафик "data_partially"
+# рассчитали метрики
+# замерили время предсказания модели
 class Classificator2:
-    def __init__(self, data, data_partially):
-        self.data = data.copy()
-        self.data_partially = data_partially.copy()
+    def __init__(self, data, data_partially): # сюда передаем data отсортированное по "yes" и "partially"
+        self.data = data.copy() # копируем данные
+        self.data_partially = data_partially.copy() # копируем данные
 
     def fit(self, model_name='GradientBoosting', pipeline=False, **kwargs):
         """
@@ -31,22 +35,32 @@ class Classificator2:
                         SVM
                 """
 
-        train_data_y = self.data['encoded']
+        train_data_y = self.data['encoded'] # целевая переменная которую мы пытаемся предсказать
         self.data.drop(labels="encoded", axis=1, inplace=True)
 
         train_data = self.data.values
 
         state = 12
+        # размер тестовой выборки
         test_size = 0.30
 
+        # разделение данных на обучающую и тестовую выборку
         x_train, x_val, y_train, y_val = train_test_split(train_data, train_data_y, test_size=test_size, random_state=state)
 
+        # x_val и y_val уменьшаются до половины их исходного размера
+
+        # x_val уменьшается до половины размера data_partially
         x_val = x_val[:round(len(self.data_partially) / 2)]
+        # то же самое
         y_val = y_val[:round(len(self.data_partially) / 2)]
 
+        # первая половина data_partially
         sub_data = self.data_partially[:round(len(x_val) / 2)]
 
+        # y_val и x_val расширяются, добавляя метки классов и данные из sub_data
+        # метки классов добавляются к y_val
         y_val = np.concatenate((y_val, sub_data['encoded']), axis=0)
+        # данные из sub_data добавляются к x_val
         x_val = np.concatenate((x_val, sub_data.drop(columns="encoded").values), axis=0)
 
         model = None
@@ -82,6 +96,7 @@ class Classificator2:
 
         print("Training time: {0:.3f} sec.".format(training_time))
 
+        # классифицируем тренировочные данные и тестовые, для сравнения показателей
         print("Accuracy score (training): {0:.3f}".format(clf.score(x_train, y_train)))
         print("Accuracy score (validation): {0:.3f}".format(clf.score(x_val, y_val)))
 

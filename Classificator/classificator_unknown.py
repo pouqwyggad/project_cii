@@ -14,6 +14,10 @@ from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 
 
+# мы вводим новый класс "Неизвестное приложение" и повторно обучаем модели
+# в обучающей выборке используем partially трафик
+# добавляем новый класс "unknown" к целевому признаку
+
 class Classificator_unknown:
     def __init__(self, data, data_partially):
         self.data = data.copy()
@@ -31,16 +35,21 @@ class Classificator_unknown:
                         SVM
                 """
 
+        # выделяем ключи для тренировочной даты
         train_data_y = self.data['encoded']
         self.data.drop(labels="encoded", axis=1, inplace=True)
 
+        # записываем значения колонок всей выборки без названий колонок
         train_data = self.data.values
 
         state = 12
+        # размер тестовой выборки
         test_size = 0.30
 
+        # разделение данных на обучающую и тестовую выборку
         x_train, x_val, y_train, y_val = train_test_split(train_data, train_data_y, test_size=test_size, random_state=state)
 
+        # запускаем таймер
         start_time = time.time()
 
         # берем треть от неизвестных приложений
@@ -50,6 +59,9 @@ class Classificator_unknown:
         x_val = np.concatenate((x_val[:round(len(self.data_partially) / 3)], sub_data.drop(columns="encoded").values), axis=0)
         y_val = np.concatenate((y_val[:round(len(self.data_partially) / 3)], sub_data['encoded']), axis=0)
 
+
+        # используем это для обучения модели на неизвестных данных
+        # вводим новвый класс "Неизвестное приложение" в обучающую выборку
         unknown_app = sub_data.drop(columns="encoded")
         unknown_mark = np.full(len(unknown_app), "unknown")
         x_train = np.concatenate((x_train, unknown_app.values), axis=0)
@@ -88,6 +100,7 @@ class Classificator_unknown:
 
         predictions_encoded = clf.predict(x_val)
 
+        # преобразуем предсказанные метки обратно в исходный формат
         predictions = le.inverse_transform(predictions_encoded)
 
         print("Model {0}".format(model_name))
@@ -95,8 +108,11 @@ class Classificator_unknown:
 
         print("Training time: {0:.3f} sec.".format(training_time))
 
+        # классифицируем тренировочные данные и тестовые, для сравнения показателей
         print("Accuracy score (training): {0:.3f}".format(clf.score(x_train, y_train)))
         print("Accuracy score (validation): {0:.3f}".format(clf.score(x_val, y_val)))
+
+        # преобразуем метки классов в один тип (str)
         y_val_encoded = y_val_encoded.astype(str)
         print(confusion_matrix(y_val_encoded, predictions))
 
