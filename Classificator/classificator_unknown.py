@@ -98,7 +98,10 @@ class Classificator_unknown:
         end_time = time.time()
         training_time = end_time - start_time
 
+        start_time = time.time()
         predictions_encoded = clf.predict(x_val)
+        end_time = time.time()
+        prediction_time = end_time - start_time
 
         # преобразуем предсказанные метки обратно в исходный формат
         predictions = le.inverse_transform(predictions_encoded)
@@ -107,10 +110,11 @@ class Classificator_unknown:
         print("--------------------------------------------")
 
         print("Training time: {0:.3f} sec.".format(training_time))
+        print("Prediction time: {0:.3f} sec.".format(prediction_time))
 
         # классифицируем тренировочные данные и тестовые, для сравнения показателей
-        print("Accuracy score (training): {0:.3f}".format(clf.score(x_train, y_train)))
-        print("Accuracy score (validation): {0:.3f}".format(clf.score(x_val, y_val)))
+        print("Accuracy score (training): {0:.3f}".format(clf.score(x_train, y_train_encoded)))
+        print("Accuracy score (validation): {0:.3f}".format(clf.score(x_val, y_val_encoded)))
 
         # преобразуем метки классов в один тип (str)
         y_val_encoded = y_val_encoded.astype(str)

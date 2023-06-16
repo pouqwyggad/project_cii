@@ -99,7 +99,7 @@ classificator_no_4 = Classificator(processed_data_no)
 classificator_no_5 = Classificator(processed_data_no)
 classificator_no_6 = Classificator(processed_data_no)
 
-# обучаем
+# # обучаем
 print('Encripted YES')
 clf_yes_1 = classificator_yes_1.fit(model_name='GradientBoosting')
 clf_yes_2 = classificator_yes_2.fit(model_name='LogisticRegression')
@@ -119,7 +119,7 @@ clf_no_6 = classificator_no_6.fit(model_name='SVM')
 
 # создаем экземпляры классификатора обученного на зашифрованных приложениях
 # с добавлением в тестовую выборку неизвесных приложений
-# print("Задание 3: ")
+print("Задание 3: ")
 clf_3_1 = Classificator2(processed_data_yes, processed_data_partially)
 clf_3_2 = Classificator2(processed_data_yes, processed_data_partially)
 clf_3_3 = Classificator2(processed_data_yes, processed_data_partially)
