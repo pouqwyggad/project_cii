@@ -55,6 +55,7 @@ for column in numeric_columns:
 
     outliers = pd.concat([outliers, column_outliers], axis=1)
 
+# Вывод выбросов
 print("Выбросы в числовых признаках:")
 print(outliers)
 
@@ -63,10 +64,10 @@ for column in numeric_columns:
     plt.figure(figsize=(6, 4))
     plt.boxplot(data[column])
     plt.title(column)
-    plt.close()
+    # plt.close()
 
     plt.savefig(column + ".png")
-    plt.show()
+    # plt.show()
 
 print("Задание 2:")
 
